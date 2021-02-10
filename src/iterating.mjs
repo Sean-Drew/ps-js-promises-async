@@ -45,5 +45,20 @@ export async function concurrent(){
     appendText(JSON.stringify(order[0]))
 }
 
-export function parallel(){
+export async function parallel(){
+    // combine promise function with async/await for parallel execution.
+    setText('')
+
+    // 2 promises in the array of Promise.all(), which will wait until all requests are complete 
+    // before returning.
+    await Promise.all([
+        (async () => {
+            const { data } = await axios.get('http://localhost:3000/orderStatuses')
+            appendText(JSON.stringify(data))
+        })(),
+        (async () => {
+            const { data } = await axios.get('http://localhost:3000/orders')
+            appendText(JSON.stringify(data))
+        })()
+    ])
 }
