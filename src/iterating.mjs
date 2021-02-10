@@ -6,7 +6,13 @@ export async function get(){
     setText(JSON.stringify(data))
 }
 
-export function getCatch(){
+export async function getCatch(){
+    try {
+        const { data } = await axios.get('http://localhost:3000/orders/123')
+        setText(JSON.stringify(data))
+    } catch (error) {
+        setText(error)
+    }
 }
 
 export function chain(){
