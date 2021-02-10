@@ -112,4 +112,15 @@ export function allSettled(){
 }
 
 export function race(){
+    // 'racing promises', or using the fastest endpoint
+    // for example, if the endpoint is hosted at multiple locations, get back the fastest one
+    let users = axios.get('http://localhost:3000/users')
+    let backup = axios.get('http://localhost:3001/users')
+
+    // pass as an array again here. .race()
+    // race returns whenever the first promise settles. if it fails it'll call the catch function 
+    // and you won't get your data. .race() isn't used a lot, .all() is used more.
+    Promise.race([users, backup])
+        .then(users => setText(JSON.stringify(users.data)))
+        .catch(reason  => setText(reason))
 }
