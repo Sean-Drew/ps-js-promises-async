@@ -1,12 +1,43 @@
 import setText, { appendText } from "./results.mjs";
 
 export function timeout(){
+    const wait = new Promise((resolve) => {
+        // setTimeout fires once
+        setTimeout(() => {
+            resolve('Timeout!')
+        }, 1500)
+    })
+
+    wait.then(text => setText(text))
 }
 
 export function interval(){
+    let counter = 0
+    const wait = new Promise((resolve) => {
+        // setInterval fires multiple times, every time the timer expires
+        setInterval(() => {
+            console.log('Interval', counter)
+            resolve(`Timeout! ${++counter}`)
+        }, 1500)
+    })
+
+    wait.then(text => setText(text))
+        .finally(() => appendText(` -- Done ${counter}`))
 }
 
 export function clearIntervalChain(){
+    let counter = 0
+    let interval
+    const wait = new Promise((resolve) => {
+        // setInterval fires multiple times, every time the timer expires
+        interval = setInterval(() => {
+            console.log('Interval', counter)
+            resolve(`Timeout! ${++counter}`)
+        }, 1500)
+    })
+
+    wait.then(text => setText(text))
+        .finally(() => clearInterval(interval))
 }
 
 export function xhr(){
