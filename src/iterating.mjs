@@ -15,7 +15,13 @@ export async function getCatch(){
     }
 }
 
-export function chain(){
+export async function chain(){
+    const { data } = await axios.get('http://localhost:3000/orders/1')
+    // destructuring data, but assigning it to a variable named 'address'
+    // console.log(`Data is: ${JSON.stringify(data)}`)
+    const { data: address } = await axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`)
+    // console.log(`Address data is: ${JSON.stringify(address)}`)
+    setText(`City: ${JSON.stringify(address.city)}`)
 }
 
 export function concurrent(){
